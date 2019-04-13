@@ -14,6 +14,17 @@ pid_incremental::pid_incremental():
 void pid_incremental::run()
 {
     static float u_increment = 0;
+    static float x = 0;
+
+    e_pre_1 = 0;
+    e_pre_2 = 0;
+    actual = 0;
+
+    A = kp + ki + kd;
+    B = -2 * kd - kp;
+    C = kd;
+    e = target - actual;
+
     for (; N > 0; N--)
     {
         e = target - actual;
@@ -24,10 +35,14 @@ void pid_incremental::run()
         u_increment += actual;
         actual = u_increment;
 
-        emit pid_incremental_return_result_signal(target ,u_increment);
-        qDebug() << u_increment;
-        msleep(200);
+        x += 0.2;
+
+        emit pid_incremental_return_result_signal(target ,u_increment, x);
+        //qDebug() << u_increment;
+        msleep(50);
     }
+    x = 0;
+    qDebug() << x;
 }
 
 

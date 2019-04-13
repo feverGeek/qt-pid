@@ -13,6 +13,13 @@ pid_position::~pid_position()
 void pid_position::run()
 {
     float u = 0;
+
+    e = 0;
+    actual = 0;
+    e_pre = 0;
+    integral = 0;
+
+    static float x = 0;
     for (; N > 0; N--)
     {
         e = target - actual;
@@ -21,10 +28,12 @@ void pid_position::run()
         e_pre = e;
         actual = u;
 
-        emit pid_position_return_result_signal(target, actual);
+        x += 0.2;
+        emit pid_position_return_result_signal(target, actual, x);
         qDebug() << actual;
-        msleep(200);
+        msleep(50);
     }
+    x = 0;
 }
 
 

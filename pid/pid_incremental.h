@@ -24,7 +24,7 @@ protected:
 
 signals:
     //void pid_incremental_show_signal();
-    void pid_incremental_return_result_signal(float, float);
+    void pid_incremental_return_result_signal(float, float, float);
 	
 private:
 	float kp;
@@ -33,8 +33,8 @@ private:
 	float target;
 	float actual;
 	float e;
-	float e_pre_1;
-	float e_pre_2;
+    float e_pre_1;
+    float e_pre_2;
 	float A;
 	float B;
 	float C;

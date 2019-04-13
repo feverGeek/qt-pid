@@ -22,7 +22,7 @@ protected:
     virtual void run();
 
 signals:
-    void pid_position_return_result_signal(float, float);
+    void pid_position_return_result_signal(float, float, float);
 
 private:
 	float kp;

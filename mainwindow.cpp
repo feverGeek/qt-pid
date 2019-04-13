@@ -10,13 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
   srand(QDateTime::currentDateTime().toTime_t());
   ui->setupUi(this);
 
-//  pid_incremental= new pid_incremental();
-
-//  connect(pid_incremental, SIGNAL(pid_incremental_return_result_signal(float, float)), this, SLOT(getPidIncrementalResultSlot(float, float)));
-//  connect(this, SIGNAL(incrementalPidUpdateSignal(float, float, float, float, float)), pid_incremental, SLOT(pid_incremental_update_slot(float, float, float, float, float)));
-//  connect(this, SIGNAL(valueChangedReplotSignal(int)), pid_incremental, SLOT(pid_incremental_get_N_slot(int)));
-//  connect(this, SIGNAL(startPidIncrementalThreadSignal(void)), this, SLOT(startPidIncrementalThreadSlot(void)));
-
   qDebug() << "here4";
 
 
@@ -272,7 +265,7 @@ void MainWindow::on_pushButtonRun_clicked()
         {
             ins_pid_position = new pid_position();
 
-            connect(ins_pid_position, SIGNAL(pid_position_return_result_signal(float, float)), this, SLOT(getPidResultSlot(float, float)));
+            connect(ins_pid_position, SIGNAL(pid_position_return_result_signal(float, float, float)), this, SLOT(getPidResultSlot(float, float, float)));
             connect(this, SIGNAL(positionPidUpdateSignal(float, float, float, float, float)), ins_pid_position, SLOT(pid_position_update_slot(float, float, float, float, float)));
             connect(this, SIGNAL(valueChangedReplotSignal(int)), ins_pid_position, SLOT(pid_position_get_N_slot(int)));
             connect(this, SIGNAL(startPidPositionThreadSignal(void)), this, SLOT(startPidPositionThreadSlot(void)));
@@ -298,7 +291,7 @@ void MainWindow::on_pushButtonRun_clicked()
         {
             ins_pid_incremental = new pid_incremental();
 
-            connect(ins_pid_incremental, SIGNAL(pid_incremental_return_result_signal(float, float)), this, SLOT(getPidResultSlot(float, float)));
+            connect(ins_pid_incremental, SIGNAL(pid_incremental_return_result_signal(float, float, float)), this, SLOT(getPidResultSlot(float, float, float)));
             connect(this, SIGNAL(incrementalPidUpdateSignal(float, float, float, float, float)), ins_pid_incremental, SLOT(pid_incremental_update_slot(float, float, float, float, float)));
             connect(this, SIGNAL(valueChangedReplotSignal(int)), ins_pid_incremental, SLOT(pid_incremental_get_N_slot(int)));
             connect(this, SIGNAL(startPidIncrementalThreadSignal(void)), this, SLOT(startPidIncrementalThreadSlot(void)));
@@ -320,11 +313,8 @@ void MainWindow::on_pushButtonRun_clicked()
     }
 }
 
-void MainWindow::getPidResultSlot(float target, float result)
+void MainWindow::getPidResultSlot(float target, float result, float x)
 {
-    static double x = 0;
-    x += 0.2;
-
     ui->customPlot->graph(0)->addData(x, result);
     ui->customPlot->replot();
 

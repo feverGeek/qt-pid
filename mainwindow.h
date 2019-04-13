@@ -38,7 +38,7 @@ private slots:
 
   void startPidPositionThreadSlot();
 
-  void getPidResultSlot(float, float);
+  void getPidResultSlot(float, float, float);
 
 signals:
   // update position pid
